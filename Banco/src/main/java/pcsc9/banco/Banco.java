@@ -18,6 +18,8 @@ public class Banco {
 
     public static void main(String[] args) {
        Tiquetes tiquetes = new Tiquetes();
+       LoginBanco menu = new LoginBanco();
+       
       
         File archivo = new File("Prod.txt"); // crear txt
         boolean existe = archivo.exists(); // verificar si existe txt, si existe = true
