@@ -15,7 +15,9 @@ import javax.swing.JOptionPane;
  */
 public class Banco {
 
- public static void cConfigInicio() {
+    public static void main(String[] args) {
+       Tiquetes tiquetes = new Tiquetes();
+      
         File archivo = new File("Prod.txt"); // crear txt
         boolean existe = archivo.exists(); // verificar si existe txt, si existe = true
 
@@ -53,13 +55,7 @@ public class Banco {
                 JOptionPane.showMessageDialog(null, "Error al crear archivo");
             }
         }
-    }
-
     
-    public static void main(String[] args) {
-       Tiquetes tiquetes = new Tiquetes();
-  
-
         while (true) {
             // Mostrar menú de opciones
             String opcion = JOptionPane.showInputDialog("Seleccione una opción:\n1. Crear tiquete\n2. Atender siguiente tiquete\n3. Salir");
