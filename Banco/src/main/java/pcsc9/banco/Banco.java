@@ -19,7 +19,7 @@ public class Banco {
     public static void main(String[] args) {
        Tiquetes tiquetes = new Tiquetes();
        LoginBanco menu = new LoginBanco();
-       
+    
       
         File archivo = new File("Prod.txt"); // crear txt
         boolean existe = archivo.exists(); // verificar si existe txt, si existe = true
@@ -49,7 +49,7 @@ public class Banco {
                 buffWriter.write("Cajas Rapida: 1");
                 buffWriter.newLine();
 
-                buffWriter.write("Caja no Preferencial: " + Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de cajas no Preferencial: ")));
+                buffWriter.write("Caja no Preferencial: " + Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de cajas Preferencial: ")));
                 buffWriter.newLine();
 
                 buffWriter.close(); // cerrar escritura
@@ -58,7 +58,8 @@ public class Banco {
                 JOptionPane.showMessageDialog(null, "Error al crear archivo");
             }
         }
-    
+       menu.mostrarMenu();
+       
         while (true) {
             // Mostrar menú de opciones
             String opcion = JOptionPane.showInputDialog("Seleccione una opción:\n1. Crear tiquete\n2. Atender siguiente tiquete\n3. Salir");
