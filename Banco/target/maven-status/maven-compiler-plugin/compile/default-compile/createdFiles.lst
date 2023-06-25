@@ -2,4 +2,5 @@ pcsc9\banco\Tiquete.class
 pcsc9\banco\Tiquetes.class
 pcsc9\banco\cConfing.class
 pcsc9\banco\Ventanilla.class
+pcsc9\banco\LoginBanco.class
 pcsc9\banco\Banco.class
