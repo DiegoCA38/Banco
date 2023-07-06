@@ -6,7 +6,6 @@ package pcsc9.banco;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,10 +13,14 @@ import javax.swing.JOptionPane;
  * @author diego
  */
 public class LoginBanco {
- private static Map<String, String> usuarios = new HashMap<>();
- public void mostrarMenu()
-{
-        Scanner scanner = new Scanner(System.in);
+    private static Map<String, String> usuarios = new HashMap<>();
+
+    public static void main(String[] args) {
+        LoginBanco loginBanco = new LoginBanco();
+        loginBanco.mostrarMenu();
+    }
+
+    public void mostrarMenu() {
         boolean ejecutar = true;
 
         while (ejecutar) {
@@ -26,65 +29,63 @@ public class LoginBanco {
                     + "2. Iniciar sesion\n"
                     + "3. Salir\n"
                     + "Seleccione una opcion:");
-          
-            scanner.nextLine(); 
 
-            if (opcion.equals(1)) {
-                    registrarUsuario(scanner);
-                    break;
-            }
-            else if (opcion.equals(2)){ 
-                    boolean loginExitoso = iniciarSesion(scanner);
-                    if (loginExitoso) {
-                        ejecutar = false; 
-                        accederSistema(scanner);
-                    }
-                    break;
-            
+            if (opcion.equals("1")) {
+                registrarUsuario();
+            } else if (opcion.equals("2")) {
+                boolean loginExitoso = iniciarSesion();
+                if (loginExitoso) {
+                    ejecutar = false;
+                    accederSistema();
+                }
+            } else if (opcion.equals("3")) {
+                ejecutar = false;
             }
         }
-        
-        JOptionPane.showInputDialog("Gracias por utilizar el sistema bancario");
+
+        JOptionPane.showMessageDialog(null, "Gracias por utilizar el sistema bancario");
     }
 
-    private static void registrarUsuario(Scanner scanner) {
-        JOptionPane.showInputDialog("Ingrese su nombre de usuario: ");
-        String usuario = scanner.nextLine();
+    private void registrarUsuario() {
+        String usuario = JOptionPane.showInputDialog("Ingrese su nombre de usuario:");
 
         if (usuarios.containsKey(usuario)) {
-            JOptionPane.showInputDialog("El usuario ya esta registrado");
+            JOptionPane.showMessageDialog(null, "El usuario ya está registrado");
             return;
         }
 
-        JOptionPane.showInputDialog("Ingrese su contraseña: ");
-        String contraseña = scanner.nextLine();
+        String contraseña = JOptionPane.showInputDialog("Ingrese su contraseña:");
 
         usuarios.put(usuario, contraseña);
-        JOptionPane.showInputDialog("Usuario registrado exitosamente");
+        JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente");
     }
 
-    private static boolean iniciarSesion(Scanner scanner) {
-        JOptionPane.showInputDialog("Ingrese su nombre de usuario: ");
-        String usuario = scanner.nextLine();
+    private boolean iniciarSesion() {
+        String usuario = JOptionPane.showInputDialog("Ingrese su nombre de usuario:");
 
         if (!usuarios.containsKey(usuario)) {
-            JOptionPane.showInputDialog("Usuario no registrado");
+            JOptionPane.showMessageDialog(null, "Usuario no registrado");
             return false;
         }
 
-       JOptionPane.showInputDialog("Ingrese su contraseña: ");
-        String contraseña = scanner.nextLine();
-
+        String contraseña = JOptionPane.showInputDialog("Ingrese su contraseña:");
         String contraseñaGuardada = usuarios.get(usuario);
+
         if (contraseña.equals(contraseñaGuardada)) {
-            JOptionPane.showInputDialog("Inicio de sesion exitoso");
+            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
             return true;
         } else {
-            JOptionPane.showInputDialog("Contraseña incorrecta");
+            JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
             return false;
         }
     }
 
+    private void accederSistema() {
+        JOptionPane.showMessageDialog(null, "¡Bienvenido al sistema bancario!");
+        
+    }
+}
+/*
     private static void accederSistema(Scanner scanner) {
         boolean ejecutar = true;
 
@@ -128,5 +129,4 @@ public class LoginBanco {
                     break;
             }
         }
-    }
-}   
+    }*/
