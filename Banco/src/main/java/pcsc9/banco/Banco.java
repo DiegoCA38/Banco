@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author diego
  * steve
  * Daniel
+ * Adrian
  */
 public class Banco {
 
