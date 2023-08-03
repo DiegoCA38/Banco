@@ -37,11 +37,11 @@ public class Colas {
    
    public void writeCaja(){ //metodo guardar datos en txt
     
-    File archivo = new File("Caja1.txt");        //crear txt
+    File archivo1 = new File("Caja1.txt");        //crear txt
+    File archivo2 = new File("Caja2.txt");
+    File archivo3 = new File("Caja3.txt");
     
-    //
-        
-    //
+
    
    }
     
