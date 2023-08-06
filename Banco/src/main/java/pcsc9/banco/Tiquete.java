@@ -20,6 +20,22 @@ public class Tiquete implements Comparable<Tiquete> {
     private String tramite;
     private String tipo;
 
+    
+    public void setHoraAtencion(LocalDateTime horaAtencion) {
+        this.horaAtencion = horaAtencion;
+    }
+    
+    public int getTramites() {
+        // Aquí Se cuenta la cantidad de trámites en base al String tramite. Por ejemplo, si el tramite es "A-B-C", entonces tiene 3 trámites, supondremos que los trámites están separados por guiones ("-").
+
+        if (tramite == null || tramite.isEmpty()) {
+            return 0;
+        }
+
+        String[] tramitesArray = tramite.split("-");
+        return tramitesArray.length;
+    }
+    
     public Tiquete(String nombre, String id, int edad, String tramite, String tipo) {
         this.nombre = nombre;
         this.id = id;
