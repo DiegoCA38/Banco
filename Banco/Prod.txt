@@ -1,5 +1,5 @@
 Nombre del Banco :ABC
-Total de Cajas: 2
+Total de Cajas: 1
 Caja Preferencial: 1
 Cajas Rapida: 1
-Caja no Preferencial: 2
+Caja no Preferencial: 1

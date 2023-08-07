@@ -12,6 +12,7 @@ import java.util.PriorityQueue;
  * @author diego
  */
 public class Tiquetes {
+    private int contadorTiquetes;
     private PriorityQueue<Tiquete> colaPreferencial;
     private PriorityQueue<Tiquete> colaUnSoloTramite;
     private PriorityQueue<Tiquete> colaDosOMasTramites;
@@ -24,6 +25,7 @@ public class Tiquetes {
 
 
     public Tiquetes(int numCajeros) {
+        contadorTiquetes = 0;
         colaPreferencial = new PriorityQueue<>();
         colaUnSoloTramite = new PriorityQueue<>();
         colaDosOMasTramites = new PriorityQueue<>();
@@ -33,7 +35,9 @@ public class Tiquetes {
         }
     }
 
+
     public void agregarTiquete(Tiquete tiquete) {
+        
         if (tiquete.getTipo().equals("P")) {        // Preferencial
             colaPreferencial.offer(tiquete);
         } else if (tiquete.getTipo().equals("A")) { // Rapida
@@ -42,6 +46,7 @@ public class Tiquetes {
             colaDosOMasTramites.offer(tiquete);
             llenarColas(); // Llamar llenarColas() sin pasar parámetros
         }
+        
 
         // Verifica si hay cajeros desocupados y les asigna un tiquete
         for (Cajero cajero : cajeros) {
@@ -56,15 +61,55 @@ public class Tiquetes {
 
     public Tiquete atenderSiguienteTiquete() {
         if (!colaPreferencial.isEmpty()) {
-            return colaPreferencial.poll();
+            Tiquete siguienteTiquete = colaPreferencial.poll();
+            siguienteTiquete.setHoraAtencion(LocalDateTime.now());
+            return siguienteTiquete;
         } else if (!colaUnSoloTramite.isEmpty()) {
-            return colaUnSoloTramite.poll();
+            Tiquete siguienteTiquete = colaUnSoloTramite.poll();
+            siguienteTiquete.setHoraAtencion(LocalDateTime.now());
+            return siguienteTiquete;
         } else if (!colaDosOMasTramites.isEmpty()) {
-            return colaDosOMasTramites.poll();
+            Tiquete siguienteTiquete = colaDosOMasTramites.poll();
+            siguienteTiquete.setHoraAtencion(LocalDateTime.now());
+            return siguienteTiquete;
         } else {
             return null;
         }
     }
+    
+    public String obtenerCajaYAdelante(Tiquete tiquete) {
+        String caja;
+        int adelante = 0;
+
+        if (tiquete.getHoraAtencion() == null) {
+            // Tiquete no ha sido atendido
+            if (colaPreferencial.contains("P")) {
+                caja = "Caja Preferencial";
+                adelante = colaPreferencial.size() - 1;
+            } else if (colaUnSoloTramite.contains("A")) {
+                caja = "Caja Rápida";
+                adelante = colaUnSoloTramite.size() - 1;
+            } else if (colaDosOMasTramites.contains("B")) {
+                caja = "Caja Mas Tramites";
+                Tiquete[] colaArray = colaDosOMasTramites.toArray(new Tiquete[0]);
+            for (int i = 0; i < colaArray.length; i++) {
+                if (colaArray[i] == tiquete) {
+                    adelante = i;
+                    break;
+                
+           }
+            }
+        } else {
+            caja = "Error: Tiquete no encontrado";
+        }
+    } else {
+        // Tiquete ha sido atendido
+        caja = "Tiquete Atendido";
+    }
+
+        return " y hay " + adelante + " persona(s) adelante de usted.";
+    }
+    
 
      private void llenarColas() {
         while (!colaDosOMasTramites.isEmpty()) {
@@ -101,6 +146,11 @@ public class Tiquetes {
         public void liberarCajero() {
             ocupado = false;
         }
+    }
+     String generarNumeroConsecutivo() {
+        String numero = String.format("%02d", contadorTiquetes);
+        contadorTiquetes++;
+        return numero;
     }
 }
 

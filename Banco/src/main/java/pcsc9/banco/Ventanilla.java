@@ -10,8 +10,8 @@ package pcsc9.banco;
  */
 public class Ventanilla extends Tiquete {
 
-    public Ventanilla(String nombre, String id, int edad, String tramite, String tipo) {
-        super(nombre, id, edad, tramite, tipo);
+    public Ventanilla(int numeroConsecutivo, String nombre, String id, int edad, String tramite, String tipo) {
+        super(numeroConsecutivo, nombre, id, edad, tramite, tipo);
     }
     
 }

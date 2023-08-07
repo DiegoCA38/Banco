@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  */
 public class Tiquete implements Comparable<Tiquete> {
     private static int contadorID = 0;
+    private int numeroConsecutivo;
     private String nombre;
     private String id;
     private int edad;
@@ -19,11 +20,18 @@ public class Tiquete implements Comparable<Tiquete> {
     private LocalDateTime horaAtencion;
     private String tramite;
     private String tipo;
+    private int numeroCaja; 
+    private int personasDelante;
 
+   
     
     public void setHoraAtencion(LocalDateTime horaAtencion) {
         this.horaAtencion = horaAtencion;
     }
+     public LocalDateTime getHoraAtencion() {
+        return horaAtencion;
+    }
+    
     
     public int getTramites() {
         // Aquí Se cuenta la cantidad de trámites en base al String tramite. Por ejemplo, si el tramite es "A-B-C", entonces tiene 3 trámites, supondremos que los trámites están separados por guiones ("-").
@@ -36,7 +44,8 @@ public class Tiquete implements Comparable<Tiquete> {
         return tramitesArray.length;
     }
     
-    public Tiquete(String nombre, String id, int edad, String tramite, String tipo) {
+    public Tiquete(int numeroConsecutivo,String nombre, String id, int edad, String tramite, String tipo) {
+        this.numeroConsecutivo = numeroConsecutivo;
         this.nombre = nombre;
         this.id = id;
         this.edad = edad;
@@ -44,8 +53,14 @@ public class Tiquete implements Comparable<Tiquete> {
         this.horaAtencion = null;
         this.tramite = tramite;
         this.tipo = tipo;
-
+     
+        
         contadorID++;
+                
+    }
+
+    public Tiquete(int numeroConsecutivo) {
+        this.numeroConsecutivo = numeroConsecutivo;
     }
 
     public String getNombre() {
@@ -64,10 +79,6 @@ public class Tiquete implements Comparable<Tiquete> {
         return horaCreacion;
     }
 
-    public LocalDateTime getHoraAtencion() {
-        return horaAtencion;
-    }
-
     public String getTramite() {
         return tramite;
     }
@@ -76,8 +87,33 @@ public class Tiquete implements Comparable<Tiquete> {
         return tipo;
     }
 
+    public int getNumeroConsecutivo() {
+        return numeroConsecutivo;
+    }
+
+    public void setNumeroConsecutivo(int numeroConsecutivo) {
+        this.numeroConsecutivo = numeroConsecutivo;
+    }
+
+    public int getNumeroCaja() {
+        return numeroCaja;
+    }
+
+    public void setNumeroCaja(int numeroCaja) {
+        this.numeroCaja = numeroCaja;
+    }
+
+    public int getPersonasDelante() {
+        return personasDelante;
+    }
+
+    public void setPersonasDelante(int personasDelante) {
+        this.personasDelante = personasDelante;
+    }
+ 
     @Override
     public int compareTo(Tiquete otroTiquete) {
         return this.horaCreacion.compareTo(otroTiquete.getHoraCreacion());
     }
+    
 }

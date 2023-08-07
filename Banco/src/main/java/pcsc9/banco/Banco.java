@@ -19,8 +19,9 @@ import javax.swing.JOptionPane;
 public class Banco {
 
     public static void main(String[] args) {
-       Tiquetes tiquetes = new Tiquetes();
+       Tiquetes tiquetes = new Tiquetes(3);
        LoginBanco menu = new LoginBanco();
+       
     
       
         File archivo = new File("Prod.txt"); // crear txt
@@ -45,10 +46,10 @@ public class Banco {
                 buffWriter.write("Total de Cajas: " + Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad total de cajas: ")));
                 buffWriter.newLine();
 
-                buffWriter.write("Caja Preferencial: 1");
+                buffWriter.write("Caja Preferencial: ");
                 buffWriter.newLine();
 
-                buffWriter.write("Cajas Rapida: 1");
+                buffWriter.write("Cajas Rapida: ");
                 buffWriter.newLine();
 
                 buffWriter.write("Caja no Preferencial: " + Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de cajas Preferencial: ")));
@@ -63,23 +64,30 @@ public class Banco {
        menu.mostrarMenu();
        
         while (true) {
+            
             // Mostrar menú de opciones
             String opcion = JOptionPane.showInputDialog("Seleccione una opción:\n1. Crear tiquete\n2. Atender siguiente tiquete\n3. Salir");
 
             if (opcion.equals("1")) {
                 // Crear tiquete
+                
                 String nombre = JOptionPane.showInputDialog("Ingrese su nombre:");
                 String id = JOptionPane.showInputDialog("Ingrese su ID:");
                 int edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad:"));
                 String tramite = JOptionPane.showInputDialog("Ingrese el tipo de trámite \n1.Depósitos. \n2.Retiros. \n3.Cambio de Divisas");
                 String tipo = JOptionPane.showInputDialog("Ingrese el tipo de Ventanilla \nP: preferencial, \nA: un solo trámite, \nB: dos o más trámites");
 
-                Tiquete nuevoTiquete = new Tiquete(nombre, id, edad, tramite, tipo);
-                Tiquete ventaTipo = new Ventanilla (nombre, id, edad, tramite, tipo);
+                String numeroConsecutivo = tiquetes.generarNumeroConsecutivo();
+                Tiquete nuevoTiquete = new Tiquete(Integer.parseInt(numeroConsecutivo), nombre, id, edad, tramite, tipo);
+                Tiquete ventaTipo = new Ventanilla(Integer.parseInt(numeroConsecutivo), nombre, id, edad, tramite, tipo);
                 tiquetes.agregarTiquete(ventaTipo);
                 tiquetes.agregarTiquete(nuevoTiquete);
 
-                JOptionPane.showMessageDialog(null, "Se ha creado el tiquete Numero\n      " + nuevoTiquete.getID() + "\n Se atendera en ventanilla: \n      " + ventaTipo.getTipo() );
+                JOptionPane.showMessageDialog(null, "Se ha creado el tiquete Numero\n" 
+                        + String.format("%02d", nuevoTiquete.getNumeroConsecutivo()) +  "\n Se atendera en ventanilla: \n" + ventaTipo.getTipo()+
+                        "\n" + tiquetes.obtenerCajaYAdelante(nuevoTiquete));
+                
+               
             } else if (opcion.equals("2")) {
                 // Atender siguiente tiquete
                 Tiquete siguienteTiquete = tiquetes.atenderSiguienteTiquete();
@@ -96,5 +104,8 @@ public class Banco {
                 JOptionPane.showMessageDialog(null, "Opción inválida");
             }
         }
+    }
+
+    public Banco() {
     }
 }
