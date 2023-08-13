@@ -5,6 +5,9 @@
 package pcsc9.banco;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  *
@@ -115,5 +118,28 @@ public class Tiquete implements Comparable<Tiquete> {
     public int compareTo(Tiquete otroTiquete) {
         return this.horaCreacion.compareTo(otroTiquete.getHoraCreacion());
     }
+    
+    //Daniel - to string para importarlos a los TXT de cajas
+
+    @Override
+    public String toString() {
+        
+        LocalTime horaCreacion = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String horaFormateada = horaCreacion.format(formatter);
+        
+        return "Tiquete: " +numeroConsecutivo+"\n"+
+               "Nombre: "+nombre+ "\n"+
+               "ID: "+id+"\n"+
+               "Edad: "+edad+ "\n"+
+               "HoraCreacion: "+horaCreacion+"\n"+
+               "HoraAtencion: "+horaAtencion+"\n"+
+               "Tramite: " +tramite+"\n"+
+               "Tipo: " + tipo +"\n"+
+               "NumeroCaja: " + numeroCaja +"\n"+
+               "PersonasDelante: " + personasDelante +"\n";
+    }
+    
+    
     
 }
