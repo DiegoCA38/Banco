@@ -4,8 +4,10 @@
  */
 package pcsc9.banco;
 
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.PriorityQueue;
+import javax.swing.JOptionPane;
 
 /**
  *Daniel
@@ -18,11 +20,11 @@ public class Tiquetes {
     private PriorityQueue<Tiquete> colaDosOMasTramites;
     private Cajero[] cajeros;
     
-//    private PriorityQueue<Tiquete> caja1 = new PriorityQueue<>();   //creacion e cajas
-//    private PriorityQueue<Tiquete> caja2 = new PriorityQueue<>();   //tipo B (dos o mas transmites)
-//    private PriorityQueue<Tiquete> caja3 = new PriorityQueue<>();
+    private PriorityQueue<Tiquete> caja1 = new PriorityQueue<>();   //creacion e cajas
+    private PriorityQueue<Tiquete> caja2 = new PriorityQueue<>();   //tipo B (dos o mas transmites)
+    private PriorityQueue<Tiquete> caja3 = new PriorityQueue<>();
     
-
+    
 
     public Tiquetes(int numCajeros) {
         contadorTiquetes = 0;
@@ -44,7 +46,7 @@ public class Tiquetes {
             colaUnSoloTramite.offer(tiquete);
         } else if (tiquete.getTipo().equals("B")) { // Dos o mas
             colaDosOMasTramites.offer(tiquete);
-            llenarColas(); // Llamar llenarColas() sin pasar parámetros
+            llenarColas(tiquete);                         // Llamar llenarColas() sin pasar parámetros *******
         }
         
 
@@ -111,16 +113,17 @@ public class Tiquetes {
     }
     
 
-     private void llenarColas() {
-        while (!colaDosOMasTramites.isEmpty()) {
-            Tiquete tiquete = colaDosOMasTramites.poll();
-            if (tiquete.getTramites() == 1) {
-                colaUnSoloTramite.offer(tiquete);
-            } else {
-                colaDosOMasTramites.offer(tiquete);
-            }
-        }
-    }
+//    private void llenarColas() {
+//        while (!colaDosOMasTramites.isEmpty()) {
+//            Tiquete tiquete = colaDosOMasTramites.poll();
+//            if (tiquete.getTramites() == 1) {
+//                colaUnSoloTramite.offer(tiquete);
+//            } else {
+//                colaDosOMasTramites.offer(tiquete);
+//            }
+//        }
+//    }
+  
 
     private class Cajero {
         private boolean ocupado;
@@ -152,14 +155,44 @@ public class Tiquetes {
         contadorTiquetes++;
         return numero;
     }
-}
+     
+    public void llenarColas(Tiquete tiquete){   //pone los tiquets en caja al de menor espacio en cola
+        
+        File txtCaja1 = new File("caja1.txt");
+        File txtCaja2 = new File("caja2.txt");
+        File txtCaja3 = new File("caja3.txt");
+    
+        try{
 
-//    public void llenarColas(Tiquete tiquete){   //pone los tiquets en caja al de menor espacio en cola
-//    
+        if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){
+
+             FileWriter filewriter1 = new FileWriter(txtCaja1);
+             BufferedWriter buffWriter1 = new BufferedWriter(filewriter1);
+             buffWriter1.write(tiquete.toString());
+             buffWriter1.newLine();
+             buffWriter1.close();
+
+        }else if(txtCaja2.length()<= txtCaja1.length() && txtCaja1.length() <= txtCaja3.length()){
+
+            FileWriter filewriter2 = new FileWriter(txtCaja1);
+            BufferedWriter buffWriter2 = new BufferedWriter(filewriter2);
+            buffWriter2.write(tiquete.toString());
+            buffWriter2.newLine();
+            buffWriter2.close();
+
+            
+        }
+        }catch(Exception e){
+               
+        }
+        
+    }
+  
+        
 //        int cantidadCaja1 = caja1.size();   //determina cantidad de objetos en caja
 //        int cantidadCaja2 = caja2.size();
 //        int cantidadCaja3 = caja3.size();
-//
+//        
 //        if(cantidadCaja1 <= cantidadCaja2 && cantidadCaja1 <= cantidadCaja3){       //caja 1 menor carga que las otras dos
 //          caja1.offer(tiquete);
 //
@@ -168,6 +201,22 @@ public class Tiquetes {
 //
 //        }else{                                                                      //caja 3 era el que menos carga tenia
 //            caja3.offer(tiquete);
-//        }  
-//   }
+//        }
+//        
+//        if (caja1!=null) {
+//            
+//            caja1.poll();
+//            
+//            
+//            
+//        }
+//        if (caja2!=null) {
+//            
+//        }
+//        if (caja3!=null) {
+//            
+//        }
+   }
+
+
     
