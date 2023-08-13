@@ -20,10 +20,6 @@ public class Tiquetes {
     private PriorityQueue<Tiquete> colaDosOMasTramites;
     private Cajero[] cajeros;
     
-    private PriorityQueue<Tiquete> caja1 = new PriorityQueue<>();   //creacion e cajas
-    private PriorityQueue<Tiquete> caja2 = new PriorityQueue<>();   //tipo B (dos o mas transmites)
-    private PriorityQueue<Tiquete> caja3 = new PriorityQueue<>();
-    
     
 
     public Tiquetes(int numCajeros) {
@@ -42,6 +38,7 @@ public class Tiquetes {
         
         if (tiquete.getTipo().equals("P")) {        // Preferencial
             colaPreferencial.offer(tiquete);
+            
         } else if (tiquete.getTipo().equals("A")) { // Rapida
             colaUnSoloTramite.offer(tiquete);
         } else if (tiquete.getTipo().equals("B")) { // Dos o mas
@@ -111,18 +108,6 @@ public class Tiquetes {
 
         return " y hay " + adelante + " persona(s) adelante de usted.";
     }
-    
-
-//    private void llenarColas() {
-//        while (!colaDosOMasTramites.isEmpty()) {
-//            Tiquete tiquete = colaDosOMasTramites.poll();
-//            if (tiquete.getTramites() == 1) {
-//                colaUnSoloTramite.offer(tiquete);
-//            } else {
-//                colaDosOMasTramites.offer(tiquete);
-//            }
-//        }
-//    }
   
 
     private class Cajero {
@@ -159,10 +144,17 @@ public class Tiquetes {
     public void llenarColas(Tiquete tiquete){   //pone los tiquets en caja al de menor espacio en cola
         
         //crear .txt de cada caja
+        
         File txtCaja1 = new File("caja1.txt");
         File txtCaja2 = new File("caja2.txt");
         File txtCaja3 = new File("caja3.txt");
-    
+        
+        boolean existeCajaTxt=txtCaja1.exists();
+        
+        if( txtCaja1.length()==0){  
+        existeCajaTxt=false;
+        }
+        
         try{
 
         if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){//caja 1 menor carga que las otras dos
@@ -175,16 +167,15 @@ public class Tiquetes {
 
         }else if(txtCaja2.length()<= txtCaja1.length() && txtCaja2.length() <= txtCaja3.length()){//caja 2 menor carga que las otras dos
 
-            FileWriter filewriter2 = new FileWriter(txtCaja1);
+            FileWriter filewriter2 = new FileWriter(txtCaja2);
             BufferedWriter buffWriter2 = new BufferedWriter(filewriter2);
             buffWriter2.write(tiquete.toString());
             buffWriter2.newLine();
             buffWriter2.close();
-
             
-        }else{                                                                  //caja 3 era el que menos carga tenia
+        }else if(txtCaja3.length()<= txtCaja1.length() && txtCaja3.length()<= txtCaja2.length()){                                                                  //caja 3 era el que menos carga tenia
             
-            FileWriter filewriter3 = new FileWriter(txtCaja1);
+            FileWriter filewriter3 = new FileWriter(txtCaja3);
             BufferedWriter buffWriter3 = new BufferedWriter(filewriter3);
             buffWriter3.write(tiquete.toString());
             buffWriter3.newLine();
@@ -192,38 +183,10 @@ public class Tiquetes {
         
         }
         }catch(Exception e){
-               
+            System.out.println(e);
         }   
     }
   
-        
-//        int cantidadCaja1 = caja1.size();   //determina cantidad de objetos en caja
-//        int cantidadCaja2 = caja2.size();
-//        int cantidadCaja3 = caja3.size();
-//        
-//        if(cantidadCaja1 <= cantidadCaja2 && cantidadCaja1 <= cantidadCaja3){       //caja 1 menor carga que las otras dos
-//          caja1.offer(tiquete);
-//
-//        }else if(cantidadCaja2 <= cantidadCaja1 && cantidadCaja2 <= cantidadCaja3){ //caja 2 menor carga que las otras dos
-//           caja2.offer(tiquete);
-//
-//        }else{                                                                      //caja 3 era el que menos carga tenia
-//            caja3.offer(tiquete);
-//        }
-//        
-//        if (caja1!=null) {
-//            
-//            caja1.poll();
-//            
-//            
-//            
-//        }
-//        if (caja2!=null) {
-//            
-//        }
-//        if (caja3!=null) {
-//            
-//        }
    }
 
 
