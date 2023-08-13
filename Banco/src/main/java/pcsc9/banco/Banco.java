@@ -8,6 +8,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import javax.swing.JOptionPane;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -82,10 +84,17 @@ public class Banco {
                 Tiquete ventaTipo = new Ventanilla(Integer.parseInt(numeroConsecutivo), nombre, id, edad, tramite, tipo);
                 tiquetes.agregarTiquete(ventaTipo);
                 tiquetes.agregarTiquete(nuevoTiquete);
+                
+                LocalTime horaActual = LocalTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                String horaFormateada = horaActual.format(formatter);
 
-                JOptionPane.showMessageDialog(null, "Se ha creado el tiquete Numero\n" 
-                        + String.format("%02d", nuevoTiquete.getNumeroConsecutivo()) +  "\n Se atendera en ventanilla: \n" + ventaTipo.getTipo()+
-                        "\n" + tiquetes.obtenerCajaYAdelante(nuevoTiquete));
+                JOptionPane.showMessageDialog(null, "    Se ha creado el tiquete Numero\n                    " 
+                        + String.format("%02d", nuevoTiquete.getNumeroConsecutivo()) + 
+                        "\n    Se atendera en ventanilla:\n                    " 
+                        + ventaTipo.getTipo()+
+                        "\n" + tiquetes.obtenerCajaYAdelante(nuevoTiquete) 
+                        + "\n          Hora se hizo el tiquete:\n        " + horaFormateada);
                 
                
             } else if (opcion.equals("2")) {
