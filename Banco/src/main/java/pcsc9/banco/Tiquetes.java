@@ -43,7 +43,7 @@ public class Tiquetes {
             colaUnSoloTramite.offer(tiquete);
         } else if (tiquete.getTipo().equals("B")) { // Dos o mas
             colaDosOMasTramites.offer(tiquete);
-            llenarColas(tiquete);                         // Llamar llenarColas() sin pasar parámetros *******
+            llenarColas(tiquete);                         // Llamar llenarColas()
         }
         
 
@@ -159,7 +159,7 @@ public class Tiquetes {
 
         if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){//caja 1 menor carga que las otras dos
 
-             FileWriter filewriter1 = new FileWriter(txtCaja1);                 //abrir txtCaja1
+             FileWriter filewriter1 = new FileWriter(txtCaja1,true);                 //abrir txtCaja1
              BufferedWriter buffWriter1 = new BufferedWriter(filewriter1);      //escribir en txt abierto
              buffWriter1.write(tiquete.toString());                             //escribir to string de tiquete en el txt
              buffWriter1.newLine();                                                 //salto de linea
@@ -167,7 +167,7 @@ public class Tiquetes {
 
         }else if(txtCaja2.length()<= txtCaja1.length() && txtCaja2.length() <= txtCaja3.length()){//caja 2 menor carga que las otras dos
 
-            FileWriter filewriter2 = new FileWriter(txtCaja2);
+            FileWriter filewriter2 = new FileWriter(txtCaja2,true);
             BufferedWriter buffWriter2 = new BufferedWriter(filewriter2);
             buffWriter2.write(tiquete.toString());
             buffWriter2.newLine();
@@ -175,7 +175,7 @@ public class Tiquetes {
             
         }else if(txtCaja3.length()<= txtCaja1.length() && txtCaja3.length()<= txtCaja2.length()){                                                                  //caja 3 era el que menos carga tenia
             
-            FileWriter filewriter3 = new FileWriter(txtCaja3);
+            FileWriter filewriter3 = new FileWriter(txtCaja3,true);
             BufferedWriter buffWriter3 = new BufferedWriter(filewriter3);
             buffWriter3.write(tiquete.toString());
             buffWriter3.newLine();
