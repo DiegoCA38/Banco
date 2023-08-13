@@ -158,21 +158,22 @@ public class Tiquetes {
      
     public void llenarColas(Tiquete tiquete){   //pone los tiquets en caja al de menor espacio en cola
         
+        //crear .txt de cada caja
         File txtCaja1 = new File("caja1.txt");
         File txtCaja2 = new File("caja2.txt");
         File txtCaja3 = new File("caja3.txt");
     
         try{
 
-        if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){
+        if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){//caja 1 menor carga que las otras dos
 
-             FileWriter filewriter1 = new FileWriter(txtCaja1);
-             BufferedWriter buffWriter1 = new BufferedWriter(filewriter1);
-             buffWriter1.write(tiquete.toString());
-             buffWriter1.newLine();
-             buffWriter1.close();
+             FileWriter filewriter1 = new FileWriter(txtCaja1);                 //abrir txtCaja1
+             BufferedWriter buffWriter1 = new BufferedWriter(filewriter1);      //escribir en txt abierto
+             buffWriter1.write(tiquete.toString());                             //escribir to string de tiquete en el txt
+             buffWriter1.newLine();                                                 //salto de linea
+             buffWriter1.close();                                                   //cerrar txt
 
-        }else if(txtCaja2.length()<= txtCaja1.length() && txtCaja1.length() <= txtCaja3.length()){
+        }else if(txtCaja2.length()<= txtCaja1.length() && txtCaja2.length() <= txtCaja3.length()){//caja 2 menor carga que las otras dos
 
             FileWriter filewriter2 = new FileWriter(txtCaja1);
             BufferedWriter buffWriter2 = new BufferedWriter(filewriter2);
@@ -181,11 +182,18 @@ public class Tiquetes {
             buffWriter2.close();
 
             
+        }else{                                                                  //caja 3 era el que menos carga tenia
+            
+            FileWriter filewriter3 = new FileWriter(txtCaja1);
+            BufferedWriter buffWriter3 = new BufferedWriter(filewriter3);
+            buffWriter3.write(tiquete.toString());
+            buffWriter3.newLine();
+            buffWriter3.close();
+        
         }
         }catch(Exception e){
                
-        }
-        
+        }   
     }
   
         
