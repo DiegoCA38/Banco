@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package pcsc9.banco;
 
 import java.util.HashMap;
@@ -36,14 +33,14 @@ public class LoginBanco {
                 boolean loginExitoso = iniciarSesion();
                 if (loginExitoso) {
                     ejecutar = false;
-                    accederSistema();
+                    
                 }
             } else if (opcion.equals("3")) {
                 ejecutar = false;
             }
         }
 
-        JOptionPane.showMessageDialog(null, "Gracias por utilizar el sistema bancario");
+        JOptionPane.showMessageDialog(null, "Bienvenido, Gracias por utilizar el sistema bancario");    //3
     }
 
     private void registrarUsuario() {
@@ -61,6 +58,8 @@ public class LoginBanco {
     }
 
     private boolean iniciarSesion() {
+        
+        
         String usuario = JOptionPane.showInputDialog("Ingrese su nombre de usuario:");
 
         if (!usuarios.containsKey(usuario)) {
@@ -72,17 +71,12 @@ public class LoginBanco {
         String contraseñaGuardada = usuarios.get(usuario);
 
         if (contraseña.equals(contraseñaGuardada)) {
-            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+            System.out.println("Inicio de sesión exitoso");    //1
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
             return false;
         }
-    }
-
-    private void accederSistema() {
-        JOptionPane.showMessageDialog(null, "¡Bienvenido al sistema bancario!");
-        
     }
 }
 /*
