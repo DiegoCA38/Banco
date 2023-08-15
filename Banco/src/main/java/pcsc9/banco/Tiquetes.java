@@ -201,8 +201,8 @@ public class Tiquetes {
          }
     }  
    
-   private void importarTXT(PriorityQueue<Tiquete> cola, File archivo) {
-    try (FileWriter fileWriter = new FileWriter(archivo, true);
+   private void importarTXT(PriorityQueue<Tiquete> cola, File archivo) {//lee los objetos del queue y los importa al txt
+    try (FileWriter fileWriter = new FileWriter(archivo, true);//el true permite continuar escribiendo sin reiniciar el txt
          BufferedWriter buffWriter = new BufferedWriter(fileWriter)) {
 
         while (!cola.isEmpty()) {
@@ -212,7 +212,7 @@ public class Tiquetes {
         }
 
     } catch (IOException e) {
-        System.out.println("Error al actualizar archivo: " + e.getMessage());
+        System.out.println("Error al importar tiquete: " + e.getMessage());
     }
 }
 }
