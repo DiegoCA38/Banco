@@ -46,10 +46,8 @@ public class Tiquetes {
             colaUnSoloTramite.offer(tiquete);
         } else if (tiquete.getTipo().equals("B")) { // Dos o mas
             colaDosOMasTramites.offer(tiquete);
-            
+            llenarColas(tiquete);                         // Llamar llenarColas()
         }
-        
-        llenarColas(tiquete);                         // Llamar llenarColas()
         
         // Verifica si hay cajeros desocupados y les asigna un tiquete
         for (Cajero cajero : cajeros) {
