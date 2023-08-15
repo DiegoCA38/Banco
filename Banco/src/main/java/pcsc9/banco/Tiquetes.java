@@ -154,8 +154,19 @@ public class Tiquetes {
        
     //Crear txt de almacenamiento   
     File txtCaja1 = new File("caja1.txt");
+        if (!txtCaja1.exists()) {
+            txtCaja1.createNewFile();
+        }
+
     File txtCaja2 = new File("caja2.txt");
-    File txtCaja3 = new File("caja3.txt"); 
+        if (!txtCaja2.exists()) {
+            txtCaja2.createNewFile();
+        }
+
+    File txtCaja3 = new File("caja3.txt");
+        if (!txtCaja3.exists()) {
+            txtCaja3.createNewFile();
+        }
 
     
     //LECTURA de lineas de cajas para comparacion posterior
@@ -196,8 +207,8 @@ public class Tiquetes {
            importarTXT(qCaja3, txtCaja3);
         }      
         
-    }catch(Exception e){
-             System.out.println(e);
+    }catch(IOException e){
+             System.out.println(e.getMessage());
          }
     }  
    
@@ -209,6 +220,7 @@ public class Tiquetes {
             Tiquete t = cola.poll(); // Extraer un tiquete de la cola
             buffWriter.write(t.toString()); // Escribir en el archivo
             buffWriter.newLine(); // Salto de línea
+            buffWriter.close();
         }
 
     } catch (IOException e) {
