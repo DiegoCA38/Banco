@@ -149,12 +149,6 @@ public class Tiquetes {
         File txtCaja2 = new File("caja2.txt");
         File txtCaja3 = new File("caja3.txt");
         
-        boolean existeCajaTxt=txtCaja1.exists();
-        
-        if( txtCaja1.length()==0){  
-        existeCajaTxt=false;
-        }
-        
         try{
 
         if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){//caja 1 menor carga que las otras dos
