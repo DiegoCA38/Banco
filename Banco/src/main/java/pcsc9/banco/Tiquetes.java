@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package pcsc9.banco;
 
 import java.io.*;
@@ -19,6 +16,12 @@ public class Tiquetes {
     private PriorityQueue<Tiquete> colaUnSoloTramite;
     private PriorityQueue<Tiquete> colaDosOMasTramites;
     private Cajero[] cajeros;
+    
+    
+    //crear cajas (volatil)
+    private PriorityQueue<Tiquete> qCaja1 = new PriorityQueue<>();
+    private PriorityQueue<Tiquete> qCaja2 = new PriorityQueue<>();
+    private PriorityQueue<Tiquete> qCaja3 = new PriorityQueue<>();
     
     
 
@@ -43,10 +46,11 @@ public class Tiquetes {
             colaUnSoloTramite.offer(tiquete);
         } else if (tiquete.getTipo().equals("B")) { // Dos o mas
             colaDosOMasTramites.offer(tiquete);
-            llenarColas(tiquete);                         // Llamar llenarColas()
+            
         }
         
-
+        llenarColas(tiquete);                         // Llamar llenarColas()
+        
         // Verifica si hay cajeros desocupados y les asigna un tiquete
         for (Cajero cajero : cajeros) {
             if (!cajero.isOcupado()) {
@@ -140,48 +144,79 @@ public class Tiquetes {
         contadorTiquetes++;
         return numero;
     }
+   
      
-    public void llenarColas(Tiquete tiquete){   //pone los tiquets en caja al de menor espacio en cola
-        
-        //crear .txt de cada caja
-        
-        File txtCaja1 = new File("caja1.txt");
-        File txtCaja2 = new File("caja2.txt");
-        File txtCaja3 = new File("caja3.txt");
-        
-        try{
+   
+   
+     
+   
+   public void llenarColas(Tiquete tiquete){
+    
+    try{   
+       
+    //Crear txt de almacenamiento   
+    File txtCaja1 = new File("caja1.txt");
+    File txtCaja2 = new File("caja2.txt");
+    File txtCaja3 = new File("caja3.txt"); 
 
-        if(txtCaja1.length() <= txtCaja2.length() && txtCaja1.length() <= txtCaja3.length()){//caja 1 menor carga que las otras dos
-
-             FileWriter filewriter1 = new FileWriter(txtCaja1,true);                 //abrir txtCaja1
-             BufferedWriter buffWriter1 = new BufferedWriter(filewriter1);      //escribir en txt abierto
-             buffWriter1.write(tiquete.toString());                             //escribir to string de tiquete en el txt
-             buffWriter1.newLine();                                                 //salto de linea
-             buffWriter1.close();                                                   //cerrar txt
-
-        }else if(txtCaja2.length()<= txtCaja1.length() && txtCaja2.length() <= txtCaja3.length()){//caja 2 menor carga que las otras dos
-
-            FileWriter filewriter2 = new FileWriter(txtCaja2,true);
-            BufferedWriter buffWriter2 = new BufferedWriter(filewriter2);
-            buffWriter2.write(tiquete.toString());
-            buffWriter2.newLine();
-            buffWriter2.close();
-            
-        }else if(txtCaja3.length()<= txtCaja1.length() && txtCaja3.length()<= txtCaja2.length()){                                                                  //caja 3 era el que menos carga tenia
-            
-            FileWriter filewriter3 = new FileWriter(txtCaja3,true);
-            BufferedWriter buffWriter3 = new BufferedWriter(filewriter3);
-            buffWriter3.write(tiquete.toString());
-            buffWriter3.newLine();
-            buffWriter3.close();
-        
-        }
-        }catch(Exception e){
-            System.out.println(e);
-        }   
+    
+    //LECTURA de lineas de cajas para comparacion posterior
+    BufferedReader readerCaja1 = new BufferedReader(new FileReader(txtCaja1));
+    int lineasCaja1 = 0;
+    while (readerCaja1.readLine() != null) {
+        lineasCaja1++;
     }
-  
-   }
+    System.out.println("Linea caja 1: "+lineasCaja1);    
 
+    BufferedReader readerCaja2 = new BufferedReader(new FileReader(txtCaja2));
+    int lineasCaja2 = 0;
+    while (readerCaja2.readLine() != null) {
+        lineasCaja2++;
+    }
+    System.out.println("Linea caja 2: "+lineasCaja2);    
+
+    BufferedReader readerCaja3 = new BufferedReader(new FileReader(txtCaja3));
+        int lineasCaja3 = 0;
+        while (readerCaja3.readLine() != null) {
+            lineasCaja3++;   
+    }
+    System.out.println("Linea caja 3: "+lineasCaja3);
+
+    
+    //compraracion y almacenamiento    
+
+        if(lineasCaja1 <= lineasCaja2 && lineasCaja1 <= lineasCaja3){       //caja 1 menor carga que las otras dos
+          qCaja1.offer(tiquete);
+          importarTXT(qCaja1, txtCaja1);
+
+        }else if(lineasCaja2 <= lineasCaja1 && lineasCaja2 <= lineasCaja3){ //caja 2 menor carga que las otras dos
+           qCaja2.offer(tiquete);
+           importarTXT(qCaja2, txtCaja2);
+
+        }else{                                                                      //caja 3 era el que menos carga tenia
+           qCaja3.offer(tiquete);
+           importarTXT(qCaja3, txtCaja3);
+        }      
+        
+    }catch(Exception e){
+             System.out.println(e);
+         }
+    }  
+   
+   private void importarTXT(PriorityQueue<Tiquete> cola, File archivo) {
+    try (FileWriter fileWriter = new FileWriter(archivo, true);
+         BufferedWriter buffWriter = new BufferedWriter(fileWriter)) {
+
+        while (!cola.isEmpty()) {
+            Tiquete t = cola.poll(); // Extraer un tiquete de la cola
+            buffWriter.write(t.toString()); // Escribir en el archivo
+            buffWriter.newLine(); // Salto de línea
+        }
+
+    } catch (IOException e) {
+        System.out.println("Error al actualizar archivo: " + e.getMessage());
+    }
+}
+}
 
     
