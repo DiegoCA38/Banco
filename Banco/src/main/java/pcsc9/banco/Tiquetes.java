@@ -39,15 +39,19 @@ public class Tiquetes {
 
     public void agregarTiquete(Tiquete tiquete) {
         
+        System.out.println("Inicia proceso de agregar tiquete");
+        
         if (tiquete.getTipo().equals("P")) {        // Preferencial
-            colaPreferencial.offer(tiquete);
-            
+            colaPreferencial.offer(tiquete);    
         } else if (tiquete.getTipo().equals("A")) { // Rapida
             colaUnSoloTramite.offer(tiquete);
         } else if (tiquete.getTipo().equals("B")) { // Dos o mas
             colaDosOMasTramites.offer(tiquete);
-            llenarColas(tiquete);                         // Llamar llenarColas()
+            
         }
+        
+        llenarColas(tiquete);
+        System.out.println("llamada a llenarColas()");
         
         // Verifica si hay cajeros desocupados y les asigna un tiquete
         for (Cajero cajero : cajeros) {
@@ -148,24 +152,29 @@ public class Tiquetes {
    
      
    
-   public void llenarColas(Tiquete tiquete){
+   private void llenarColas(Tiquete tiquete){
     
+       System.out.println("ejecucion de llenar colas...");
+       
     try{   
        
     //Crear txt de almacenamiento   
     File txtCaja1 = new File("caja1.txt");
         if (!txtCaja1.exists()) {
             txtCaja1.createNewFile();
+            System.out.println("TXT 1 creado");
         }
 
     File txtCaja2 = new File("caja2.txt");
         if (!txtCaja2.exists()) {
             txtCaja2.createNewFile();
+            System.out.println("TXT 2 creado");
         }
 
     File txtCaja3 = new File("caja3.txt");
         if (!txtCaja3.exists()) {
             txtCaja3.createNewFile();
+            System.out.println("TXT 3 creado");
         }
 
     
@@ -175,36 +184,42 @@ public class Tiquetes {
     while (readerCaja1.readLine() != null) {
         lineasCaja1++;
     }
-    System.out.println("Linea caja 1: "+lineasCaja1);    
+    System.out.println("Linea caja 1: "+lineasCaja1+"\n");    
 
     BufferedReader readerCaja2 = new BufferedReader(new FileReader(txtCaja2));
     int lineasCaja2 = 0;
     while (readerCaja2.readLine() != null) {
         lineasCaja2++;
     }
-    System.out.println("Linea caja 2: "+lineasCaja2);    
+    System.out.println("Linea caja 2: "+lineasCaja2+"\n");    
 
     BufferedReader readerCaja3 = new BufferedReader(new FileReader(txtCaja3));
         int lineasCaja3 = 0;
         while (readerCaja3.readLine() != null) {
             lineasCaja3++;   
     }
-    System.out.println("Linea caja 3: "+lineasCaja3);
+    System.out.println("Linea caja 3: "+lineasCaja3+"\n");
 
     
-    //compraracion y almacenamiento    
-
+   // establecer hora de atencion   
+    tiquete.setHoraAtencion(LocalDateTime.now());
+    
+    //compraracion y almacenamiento 
         if(lineasCaja1 <= lineasCaja2 && lineasCaja1 <= lineasCaja3){       //caja 1 menor carga que las otras dos
           qCaja1.offer(tiquete);
           importarTXT(qCaja1, txtCaja1);
+          System.out.println("tiquete: "+tiquete.getNombre()+" agregado a caja 1 \n");
 
         }else if(lineasCaja2 <= lineasCaja1 && lineasCaja2 <= lineasCaja3){ //caja 2 menor carga que las otras dos
            qCaja2.offer(tiquete);
            importarTXT(qCaja2, txtCaja2);
-
+           System.out.println("tiquete: "+tiquete.getNombre()+" agregado a caja 2 \n");
+           
         }else{                                                                      //caja 3 era el que menos carga tenia
            qCaja3.offer(tiquete);
            importarTXT(qCaja3, txtCaja3);
+           System.out.println("tiquete: "+tiquete.getNombre()+" agregado a caja 3 \n");
+           
         }      
         
     }catch(IOException e){
@@ -213,7 +228,8 @@ public class Tiquetes {
     }  
    
    private void importarTXT(PriorityQueue<Tiquete> cola, File archivo) {//lee los objetos del queue y los importa al txt
-    try (FileWriter fileWriter = new FileWriter(archivo, true);//el true permite continuar escribiendo sin reiniciar el txt
+       
+   try (FileWriter fileWriter = new FileWriter(archivo, true);//el true permite continuar escribiendo sin reiniciar el txt
          BufferedWriter buffWriter = new BufferedWriter(fileWriter)) {
 
         while (!cola.isEmpty()) {
@@ -222,7 +238,7 @@ public class Tiquetes {
             buffWriter.newLine(); // Salto de línea
             buffWriter.close();
         }
-
+    System.out.println("tiquete importado al txt !!");
     } catch (IOException e) {
         System.out.println("Error al importar tiquete: " + e.getMessage());
     }
