@@ -82,7 +82,7 @@ public class Banco {
                 String numeroConsecutivo = tiquetes.generarNumeroConsecutivo();
                 Tiquete nuevoTiquete = new Tiquete(Integer.parseInt(numeroConsecutivo), nombre, id, edad, tramite, tipo);
                 Tiquete ventaTipo = new Ventanilla(Integer.parseInt(numeroConsecutivo), nombre, id, edad, tramite, tipo);
-                tiquetes.agregarTiquete(ventaTipo);
+//                tiquetes.agregarTiquete(ventaTipo);
                 tiquetes.agregarTiquete(nuevoTiquete);
                 
                 LocalTime horaActual = LocalTime.now();
