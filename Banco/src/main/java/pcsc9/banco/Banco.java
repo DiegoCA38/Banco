@@ -21,10 +21,10 @@ import java.time.format.DateTimeFormatter;
 public class Banco {
 
     public static void main(String[] args) {
+
        Tiquetes tiquetes = new Tiquetes(3);
        LoginBanco menu = new LoginBanco();
-       
-    
+
       
         File archivo = new File("Prod.txt"); // crear txt
         boolean existe = archivo.exists(); // verificar si existe txt, si existe = true
@@ -112,9 +112,8 @@ public class Banco {
             } else {
                 JOptionPane.showMessageDialog(null, "Opción inválida");
             }
-        }
+        } 
     }
-
     public Banco() {
     }
 }
