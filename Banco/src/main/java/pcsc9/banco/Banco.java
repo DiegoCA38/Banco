@@ -98,9 +98,8 @@ public class Banco {
                 
                
             } else if (opcion.equals("2")) {
-                // Atender siguiente tiquete
+                // Atender siguiente tiquete                
                 Tiquete siguienteTiquete = tiquetes.atenderSiguienteTiquete();
-
                 if (siguienteTiquete != null) {
                     JOptionPane.showMessageDialog(null, "Es el turno del tiquete #" + siguienteTiquete.getID());
                 } else {

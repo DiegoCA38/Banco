@@ -167,6 +167,11 @@ public class Tiquetes {
                 txtCaja3.createNewFile();
                 System.out.println("TXT 3 creado");
             }
+            
+            //calcular caja mas eficiente, false por default
+            Boolean mayor1=false;
+            Boolean mayor2=false;
+            Boolean mayor3=false;
 
             // LECTURA de lineas de cajas para comparacion posterior
             BufferedReader readerCaja1 = new BufferedReader(new FileReader(txtCaja1));
@@ -184,19 +189,45 @@ public class Tiquetes {
             }
 
             System.out.println("Linea caja 2: " + lineasCaja2 + "\n");
-
             BufferedReader readerCaja3 = new BufferedReader(new FileReader(txtCaja3));
             int lineasCaja3 = 0;
             while (readerCaja3.readLine() != null) {
                 lineasCaja3++;
             }
 
-
             System.out.println("Linea caja 3: " + lineasCaja3 + "\n");
 
             // establecer hora de atencion
             tiquete.setHoraAtencion(LocalDateTime.now());
-
+            
+//            //calculo cantidad de clientes atendidos
+//            Reportes clientesAtendidos = new Reportes();
+//            clientesAtendidos.cantidadTiquetes(lineasCaja1, lineasCaja2, lineasCaja3);
+            
+            //calculo de caja mas eficiente
+            if (lineasCaja1 >= lineasCaja2 && lineasCaja1 >= lineasCaja3) { //si caja1 tiene mas que caja 2 y 3
+                mayor1=true;                                                //este atendio mas
+            }else{                                                          //si no
+                mayor1=false;                                               //no fue el que mas atendio                                                    
+            }
+                
+            if (lineasCaja2 >= lineasCaja1 && lineasCaja2 >= lineasCaja3) {
+                mayor2=true;
+            }else{
+                mayor2=false;                 
+            }    
+                
+            if(lineasCaja3 >= lineasCaja1 && lineasCaja3 >= lineasCaja2){
+            mayor3=true;   
+            }else { // caja 3 tiene mas atendidos
+                mayor3=false;
+            }
+            
+            
+            
+            Reportes reportes = new Reportes();
+            reportes.cajaAtencionMayor(mayor1, mayor2, mayor3);
+            
             // compraracion y almacenamiento
             if (lineasCaja1 <= lineasCaja2 && lineasCaja1 <= lineasCaja3) { // caja 1 menor carga que las otras dos
                 qCaja1.offer(tiquete);
