@@ -50,10 +50,10 @@ public class cConfing {
         buffWriter.write("Total de Cajas: "+Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad total de cajas: ")));
         buffWriter.newLine();
         
-        buffWriter.write("Caja Preferencial: 1");
+        buffWriter.write("Caja Preferencial: ");
         buffWriter.newLine();
         
-        buffWriter.write("Cajas Rapida: 1");
+        buffWriter.write("Cajas Rapida: ");
         buffWriter.newLine();
         
         buffWriter.write("Caja no Preferencial: "+Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de cajas no Preferencial: ")));
